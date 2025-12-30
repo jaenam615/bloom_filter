@@ -88,8 +88,9 @@ class BloomFilter:
         Returns:
             Hash value modulo the bit array size
         """
-        # Convert item to bytes
-        item_bytes = str(item).encode('utf-8')
+        # Convert item to bytes using repr to avoid hash collisions
+        # between different types with same string representation
+        item_bytes = repr(item).encode('utf-8')
         # Use hashlib with seed for different hash functions
         hash_obj = hashlib.sha256(item_bytes + str(seed).encode('utf-8'))
         # Return hash value modulo size
